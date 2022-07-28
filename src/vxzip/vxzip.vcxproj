@@ -88,6 +88,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\thirdparty\source-sdk\mp\src\public\tier0\memoverride.cpp" />
     <ClCompile Include="vxzip.cpp" />
     <ClCompile Include="xzip_file.cpp" />
   </ItemGroup>
@@ -102,7 +103,6 @@
     <Library Include="..\thirdparty\source-sdk\mp\src\lib\public\tier0.lib" />
     <Library Include="..\thirdparty\source-sdk\mp\src\lib\public\tier1.lib" />
     <Library Include="..\thirdparty\source-sdk\mp\src\lib\public\tier2.lib" />
-    <Library Include="..\thirdparty\source-sdk\mp\src\lib\public\tier3.lib" />
     <Library Include="..\thirdparty\source-sdk\mp\src\lib\public\vstdlib.lib" />
     <Library Include="..\thirdparty\source-sdk\mp\src\lib\public\vtf.lib" />
   </ItemGroup>
