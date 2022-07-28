@@ -348,3 +348,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Ignore tier0... no piracy
+/src/vxzip/tier0.dll
+
+# Ignore solution files
+*.sln
