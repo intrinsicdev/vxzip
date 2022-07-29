@@ -354,3 +354,4 @@ MigrationBackup/
 
 # Ignore solution files
 *.sln
+/src/vxzip/vstdlib.dll

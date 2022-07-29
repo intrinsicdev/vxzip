@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\thirdparty\source-sdk\mp\src\lib\common\lzma.lib" />
+    <Library Include="..\thirdparty\source-sdk\mp\src\lib\public\appframework.lib" />
     <Library Include="..\thirdparty\source-sdk\mp\src\lib\public\bitmap.lib" />
     <Library Include="..\thirdparty\source-sdk\mp\src\lib\public\mathlib.lib" />
     <Library Include="..\thirdparty\source-sdk\mp\src\lib\public\tier0.lib" />
@@ -110,6 +111,11 @@
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="tier0.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="vstdlib.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
   </ItemGroup>
