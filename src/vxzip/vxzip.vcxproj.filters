@@ -16,6 +16,12 @@
     <Filter Include="Link Libraries">
       <UniqueIdentifier>{659ee02a-fb0a-48fa-b620-5d99cea0a262}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Source SDK">
+      <UniqueIdentifier>{97b57be6-77ba-490f-af91-1d5ee583267a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Source SDK">
+      <UniqueIdentifier>{17baae5a-ebcc-4372-9b2e-0c927e9c277f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vxzip.cpp">
@@ -23,6 +29,21 @@
     </ClCompile>
     <ClCompile Include="xzip_file.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparty\source-sdk\mp\src\public\filesystem_init.cpp">
+      <Filter>Source Files\Source SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparty\source-sdk\mp\src\public\filesystem_helpers.cpp">
+      <Filter>Source Files\Source SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparty\source-sdk\mp\src\utils\common\cmdlib.cpp">
+      <Filter>Source Files\Source SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparty\source-sdk\mp\src\utils\common\scriplib.cpp">
+      <Filter>Source Files\Source SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparty\source-sdk\mp\src\utils\common\filesystem_tools.cpp">
+      <Filter>Source Files\Source SDK</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -34,6 +55,27 @@
     </ClInclude>
     <ClInclude Include="vxzip.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\utils\common\cmdlib.h">
+      <Filter>Header Files\Source SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\utils\common\filesystem_tools.h">
+      <Filter>Header Files\Source SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\utils\common\scriplib.h">
+      <Filter>Header Files\Source SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\filesystem_init.h">
+      <Filter>Header Files\Source SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\filesystem_helpers.h">
+      <Filter>Header Files\Source SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\zip_utils.h">
+      <Filter>Header Files\Source SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\zip_uncompressed.h">
+      <Filter>Header Files\Source SDK</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

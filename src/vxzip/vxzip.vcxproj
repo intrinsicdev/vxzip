@@ -46,12 +46,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <LibraryPath>..\thirdparty\source-sdk\mp\src\common\public;$(LibraryPath)</LibraryPath>
-    <IncludePath>..\thirdparty\source-sdk\mp\src\public;..\thirdparty\source-sdk\mp\src\public\tier1;$(IncludePath)</IncludePath>
+    <IncludePath>..\thirdparty\source-sdk\mp\src\public;..\thirdparty\source-sdk\mp\src\public\tier0;..\thirdparty\source-sdk\mp\src\public\tier1;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <LibraryPath>..\thirdparty\source-sdk\mp\src\common\public;$(LibraryPath)</LibraryPath>
-    <IncludePath>..\thirdparty\source-sdk\mp\src\public;..\thirdparty\source-sdk\mp\src\public\tier1;$(IncludePath)</IncludePath>
+    <IncludePath>..\thirdparty\source-sdk\mp\src\public;..\thirdparty\source-sdk\mp\src\public\tier0;..\thirdparty\source-sdk\mp\src\public\tier1;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -90,10 +90,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\thirdparty\source-sdk\mp\src\public\filesystem_helpers.cpp" />
+    <ClCompile Include="..\thirdparty\source-sdk\mp\src\public\filesystem_init.cpp" />
+    <ClCompile Include="..\thirdparty\source-sdk\mp\src\utils\common\cmdlib.cpp" />
+    <ClCompile Include="..\thirdparty\source-sdk\mp\src\utils\common\filesystem_tools.cpp" />
+    <ClCompile Include="..\thirdparty\source-sdk\mp\src\utils\common\scriplib.cpp" />
     <ClCompile Include="vxzip.cpp" />
     <ClCompile Include="xzip_file.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\filesystem_helpers.h" />
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\filesystem_init.h" />
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\zip_uncompressed.h" />
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\zip_utils.h" />
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\utils\common\cmdlib.h" />
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\utils\common\filesystem_tools.h" />
+    <ClInclude Include="..\thirdparty\source-sdk\mp\src\utils\common\scriplib.h" />
     <ClInclude Include="source_sdk.h" />
     <ClInclude Include="vxzip.h" />
     <ClInclude Include="xzip_file.h" />
