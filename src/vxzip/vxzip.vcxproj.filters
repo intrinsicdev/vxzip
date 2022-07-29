@@ -111,4 +111,7 @@
     <CopyFileToFolders Include="tier0.dll" />
     <CopyFileToFolders Include="vstdlib.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="FileSystem_Stdio.dll" />
+  </ItemGroup>
 </Project>

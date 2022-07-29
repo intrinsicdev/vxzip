@@ -355,3 +355,6 @@ MigrationBackup/
 # Ignore solution files
 *.sln
 /src/vxzip/vstdlib.dll
+/src/vxzip/FileSystem_Stdio.dll
+/src/vxzip/mdllib.dll
+/src/vxzip/vphysics.dll

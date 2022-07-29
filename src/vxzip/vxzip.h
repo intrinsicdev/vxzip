@@ -6,11 +6,11 @@
  * \date   July 2022
  *********************************************************************/
 #pragma once
-
 #include <appframework/appframework.h>
 #include <tier0/icommandline.h>
 #include <tier1/tier1.h>
 #include <tier2/tier2.h>
+#include <../../utils/common/scriplib.h>
 #include "xzip_file.h"
 
  /**
@@ -95,12 +95,12 @@ private:
 
 	/**
 	 * Closes the XZip pak file (deallocation).
-	 * 
+	 *
 	 */
 	void CloseXZip();
 
-	void ExtractAllFiles(CUtlString& outputPath);
-	void ExtractFile(CUtlSymbol& fileSymbol, CUtlString& outputPath);
+	void ExtractAllFiles(CUtlString* outputPath);
+	bool ExtractFile(CUtlSymbol* fileSymbol, int fileSize, CUtlString* outputPath);
 
 	/**
 	 * Object pointer to CXZip for this instance.

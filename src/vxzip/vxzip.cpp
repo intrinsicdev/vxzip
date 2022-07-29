@@ -6,6 +6,7 @@
  * \date   July 2022
  *********************************************************************/
 #include "vxzip.h"
+#include "../thirdparty/source-sdk/mp/src/utils/common/filesystem_tools.h"
 
  /**
   * Redirection of the log messages to signal failures.
@@ -34,9 +35,13 @@ bool CVXZipApp::Create()
 	// Redirect spew output
 	SpewOutputFunc(OutputFunc);
 
-	// todo: Add required appsystem module loads here
-
-	return true;
+	AppSystemInfo_t appSystems[] =
+	{
+		{ "FileSystem_Stdio.dll",	FILESYSTEM_INTERFACE_VERSION },
+		// todo: Add required appsystem module loads here
+		{ "", "" }	// Required to terminate the list
+	};
+	return AddSystems(appSystems);
 }
 
 bool CVXZipApp::PreInit()
@@ -46,7 +51,12 @@ bool CVXZipApp::PreInit()
 	ConnectTier1Libraries(&factory, 1);
 	ConnectTier2Libraries(&factory, 1);
 
-	// todo: Null check connected appsystems here. If null return false
+	// Init barebones file system
+	if (!FileSystem_Init(NULL, -1, FSInitType_t::FS_INIT_COMPATIBILITY_MODE, true))
+	{
+		Error("Failed to init filesystem!");
+		return false;
+	}
 
 	return true;
 }
@@ -135,7 +145,7 @@ bool CVXZipApp::ParseCommandLine()
 void CVXZipApp::ExtractXZip(CUtlString& outputPath, CUtlString& zipPath)
 {
 	OpenXZip(zipPath);
-	ExtractAllFiles(outputPath);
+	ExtractAllFiles(&outputPath);
 }
 
 void CVXZipApp::BuildXZip(CUtlString& inputPath, CUtlString& zipPath)
@@ -171,7 +181,7 @@ void CVXZipApp::CloseXZip()
 		delete m_pXZipFile;
 }
 
-void CVXZipApp::ExtractAllFiles(CUtlString& outputPath)
+void CVXZipApp::ExtractAllFiles(CUtlString* outputPath)
 {
 	auto iEntryID = -1;
 	auto iFileSize = 0;
@@ -183,17 +193,33 @@ void CVXZipApp::ExtractAllFiles(CUtlString& outputPath)
 	// walk the directory
 	while (iEntryID > -1)
 	{
-		Msg("Extracting - %s\n", entrySymbol.String());
+		// extract file
+		if(ExtractFile(&entrySymbol, iFileSize, outputPath))
+			Msg("Extracted - %s\n", entrySymbol.String());
+		else
+			Error("Failed to extract - %s\n", entrySymbol.String());
 
 		// next...
 		iEntryID = m_pXZipFile->GetNextEntry(iEntryID, entrySymbol, iFileSize);
 	}
 }
 
-void CVXZipApp::ExtractFile(CUtlSymbol& fileSymbol, CUtlString& outputPath)
+bool CVXZipApp::ExtractFile(CUtlSymbol* fileSymbol, int fileSize, CUtlString* outputPath)
 {
-	// todo: Assemble final path on disk
-	// todo: Validate/Create final file (default to override)
+	auto fullPath = CUtlString::PathJoin(outputPath->Get(), fileSymbol->String());
 	//	todo: Add '-f' option for forcing - aka overwrite if exists
-	// todo: Extract file to disk 
+	auto writeMode = DiskWriteMode_t::WRITE_TO_DISK_ALWAYS;
+	auto fileBuffer = CUtlBuffer(0, fileSize, 0);
+	auto bResult = false;
+
+	m_pXZipFile->ReadFile(m_hXZipFile, fileSymbol->String(), false, fileBuffer);
+	
+	if (fileBuffer.IsValid())
+	{
+		// todo: Write file
+		fileBuffer.Purge();
+		return true;
+	}
+
+	return false;
 }
