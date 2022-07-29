@@ -70,17 +70,18 @@ int CVXZipApp::Main()
 	{
 		// build xzip
 		paramAction.Set(CommandLine()->GetParm(idxBuildParam + 1));
-		return this->BuildXZip(paramTarget, paramAction) ? 1 : 0;
+		this->BuildXZip(paramTarget, paramAction);
 	}
 	else
 	{
 		// extract xzip
 		paramAction.Set(CommandLine()->GetParm(idxExtractParam + 1));
 
-		return this->ExtractXZip(paramAction, paramTarget) ? 1 : 0;
+		this->ExtractXZip(paramAction, paramTarget);
 	}
 
 	// success.
+	Msg("Done, SUCCESS!\n");
 	return 0;
 }
 
@@ -131,18 +132,68 @@ bool CVXZipApp::ParseCommandLine()
 	return true;
 }
 
-bool CVXZipApp::ExtractXZip(CUtlString& outputPath, CUtlString& zipPath)
+void CVXZipApp::ExtractXZip(CUtlString& outputPath, CUtlString& zipPath)
 {
-	Msg("Extracting '%s' to '%s'", zipPath.Get(), outputPath.Get());
-
-	// success
-	return true;
+	OpenXZip(zipPath);
+	ExtractAllFiles(outputPath);
 }
 
-bool CVXZipApp::BuildXZip(CUtlString& inputPath, CUtlString& zipPath)
+void CVXZipApp::BuildXZip(CUtlString& inputPath, CUtlString& zipPath)
 {
-	Msg("Building '%s' from '%s'", zipPath.Get(), inputPath.Get());
+	// todo: Build file list from inputPath
+	// todo: Convert files that qualify
+	// todo: Assemble XZip pak
+	// todo: Write XZip pak to disk
+}
 
-	// success
-	return true;
+void CVXZipApp::OpenXZip(CUtlString& inputPath)
+{
+	m_pXZipFile = new CXZipFile(NULL, true);
+
+	m_hXZipFile = m_pXZipFile->OpenFromDisk(inputPath.Get());
+	Assert(m_hXZipFile);
+}
+
+void CVXZipApp::SaveXZip(CUtlString& outputPath, bool bClose)
+{
+	m_pXZipFile->SaveToDisk(m_hXZipFile);
+
+	if (bClose)
+		CloseXZip();
+}
+
+void CVXZipApp::CloseXZip()
+{
+	if (m_hXZipFile != INVALID_HANDLE_VALUE)
+		m_hXZipFile = INVALID_HANDLE_VALUE;
+
+	if (m_pXZipFile)
+		delete m_pXZipFile;
+}
+
+void CVXZipApp::ExtractAllFiles(CUtlString& outputPath)
+{
+	auto iEntryID = -1;
+	auto iFileSize = 0;
+	CUtlSymbol entrySymbol;
+
+	// get first entry
+	iEntryID = m_pXZipFile->GetNextEntry(iEntryID, entrySymbol, iFileSize);
+
+	// walk the directory
+	while (iEntryID > -1)
+	{
+		Msg("Extracting - %s\n", entrySymbol.String());
+
+		// next...
+		iEntryID = m_pXZipFile->GetNextEntry(iEntryID, entrySymbol, iFileSize);
+	}
+}
+
+void CVXZipApp::ExtractFile(CUtlSymbol& fileSymbol, CUtlString& outputPath)
+{
+	// todo: Assemble final path on disk
+	// todo: Validate/Create final file (default to override)
+	//	todo: Add '-f' option for forcing - aka overwrite if exists
+	// todo: Extract file to disk 
 }

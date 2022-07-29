@@ -87,8 +87,6 @@ public:
 
 	void			SpewDirectory(void);
 
-	int				GetNextFilename(int id, char* pBuffer, int bufferSize, int& fileSize);
-
 	void			SaveToBuffer(CUtlBuffer& buffer);
 	void			SaveToDisk(FILE* fout);
 	void			SaveToDisk(HANDLE hOutFile);
@@ -164,6 +162,9 @@ private:
 	HANDLE				m_hDiskCacheWriteFile;
 	CUtlString			m_DiskCacheName;
 	CUtlString			m_DiskCacheWritePath;
+
+public: // iterators
+	int				GetNextEntry(int id, CUtlSymbol& fileEntry, int& fileSize);
 };
 
 /**

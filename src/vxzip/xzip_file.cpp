@@ -1004,7 +1004,7 @@ void CXZipFile::SpewDirectory(void)
 //-----------------------------------------------------------------------------
 // Purpose: Iterate through directory
 //-----------------------------------------------------------------------------
-int CXZipFile::GetNextFilename(int id, char* pBuffer, int bufferSize, int& fileSize)
+int CXZipFile::GetNextEntry(int id, CUtlSymbol& fileEntry, int& fileSize)
 {
 	if (id == -1)
 	{
@@ -1014,6 +1014,7 @@ int CXZipFile::GetNextFilename(int id, char* pBuffer, int bufferSize, int& fileS
 	{
 		id = m_Files.NextInorder(id);
 	}
+
 	if (id == m_Files.InvalidIndex())
 	{
 		// list is empty
@@ -1021,8 +1022,7 @@ int CXZipFile::GetNextFilename(int id, char* pBuffer, int bufferSize, int& fileS
 	}
 
 	CZipEntry* e = &m_Files[id];
-
-	Q_strncpy(pBuffer, e->m_Name.String(), bufferSize);
+	fileEntry = e->m_Name;
 	fileSize = e->m_nUncompressedSize;
 
 	return id;

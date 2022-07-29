@@ -62,7 +62,7 @@ public:
 	 * \param zipPath		Input path for xzip pak
 	 * \return True indicates success
 	 */
-	bool ExtractXZip(CUtlString& outputPath, CUtlString& zipPath);
+	void ExtractXZip(CUtlString& outputPath, CUtlString& zipPath);
 	/**
 	 * Constructs an xzip pak from a given directory.
 	 *
@@ -70,13 +70,46 @@ public:
 	 * \param zipPath		Output path for xzip pak
 	 * \return True indicates success
 	 */
-	bool BuildXZip(CUtlString& inputPath, CUtlString& zipPath);
+	void BuildXZip(CUtlString& inputPath, CUtlString& zipPath);
 
 private:
 	// parameter tokens
 	const char* m_szTargetToken = "-t";
 	const char* m_szExtractToken = "-e";
 	const char* m_szBuildToken = "-b";
+
+	/**
+	 * Opens an XZip pak file for reading.
+	 *
+	 * \param inputPath
+	 * \return
+	 */
+	void OpenXZip(CUtlString& inputPath);
+	/**
+	 * Writes the current pak file to the disk.
+	 *
+	 * \param outputPath
+	 * \return
+	 */
+	void SaveXZip(CUtlString& outputPath, bool bClose = false);
+
+	/**
+	 * Closes the XZip pak file (deallocation).
+	 * 
+	 */
+	void CloseXZip();
+
+	void ExtractAllFiles(CUtlString& outputPath);
+	void ExtractFile(CUtlSymbol& fileSymbol, CUtlString& outputPath);
+
+	/**
+	 * Object pointer to CXZip for this instance.
+	 */
+	CXZipFile* m_pXZipFile;
+	/**
+	 * Win32 handle to the XZip file.
+	 */
+	HANDLE m_hXZipFile;
 };
 
 /**
