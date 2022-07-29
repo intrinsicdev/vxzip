@@ -1,24 +1,27 @@
 /*****************************************************************//**
  * \file   vxzip.cpp
  * \brief  Main entry point
- * 
+ *
  * \author Tom <intrinsicdev@outlook.com>
  * \date   July 2022
  *********************************************************************/
-#include <memory>
-#include "xzip_file.h"
+#include "vxzip.h"
 
-int main()
+bool CVXZipApp::Create()
 {
-	auto pZipFile = new CXZipFile("D:\\temp\\vxzip\\tmp", true);
-	auto hZipFile = pZipFile->OpenFromDisk("D:\\temp\\vxzip\\test.360.zip");
+	return false;
+}
 
-	if (hZipFile != INVALID_HANDLE_VALUE) 
-		pZipFile->SpewDirectory();
-	else 
-		printf("fail\n");
+bool CVXZipApp::PreInit()
+{
+	return false;
+}
 
-	free(pZipFile);
-
+int CVXZipApp::Main()
+{
 	return 0;
+}
+
+void CVXZipApp::PostShutdown()
+{
 }
