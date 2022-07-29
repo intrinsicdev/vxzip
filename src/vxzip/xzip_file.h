@@ -2,8 +2,8 @@
  * \file   xzip_file.h
  * \brief  XZip format support. Based on the zip code provided
  *			by the public SDK.
- * 
- * \author Tom <intrinsicdev@outlook.com>
+ *
+ * \author Tom <intrinsic.dev@outlook.com>
  * \date   July 2022
  *********************************************************************/
 #ifndef _XZIP_FILE_H
@@ -22,34 +22,34 @@
 #include "zip_utils.h"
 #include "zip_uncompressed.h"
 
-/**
- * Max files allowed in a zip file (per SDK).
- */
+ /**
+  * Max files allowed in a zip file (per SDK).
+  */
 #define MAX_FILES_IN_ZIP 32768
 
-/**
- * XZip Package.
- */
+  /**
+   * XZip Package.
+   */
 class CXZipFile
 {
 public:
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * \param pDiskCacheWritePath
 	 * \param bSortByName
 	 */
 	CXZipFile(const char* pDiskCacheWritePath, bool bSortByName);
 	/**
 	 * Default deconstructor.
-	 * 
+	 *
 	 */
 	~CXZipFile(void);
 
 public:
 	/**
 	 * Adds file to zip as a file with given name.
-	 * 
+	 *
 	 * \param relativename		Relative name (path + name) to use in the zip package
 	 * \param fullpath			Full path to the file on the file system
 	 * \param compressionType	Compression method to use (if any)
@@ -57,7 +57,7 @@ public:
 	void			AddFile(const char* relativename, const char* fullpath, IZip::eCompressionType compressionType);
 	/**
 	 * Add buffer to zip as a file with given name.
-	 * 
+	 *
 	 * \param relativename		Relative name (path + name) to use in the zip package
 	 * \param data				Buffer containing file contents
 	 * \param length			Length of buffer
@@ -67,18 +67,17 @@ public:
 	void			AddBuffer(const char* relativename, void* data, int length, bool bTextMode, IZip::eCompressionType compressionType);
 	/**
 	 * Removes all file entries from the zip.
-	 * 
+	 *
 	 */
 	void			Clear(void);
 	/**
 	 * Removes a given file from the zip.
-	 * 
+	 *
 	 * \param relativename	Relative name (path + name) to use in the zip package
 	 */
 	void			RemoveFile(const char* relativename);
 
 	bool			FileExists(const char* relativename);
-
 
 	bool			ReadFile(const char* relativename, bool bTextMode, CUtlBuffer& buf);
 	bool			ReadFile(HANDLE hZipFile, const char* relativename, bool bTextMode, CUtlBuffer& buf);
@@ -169,7 +168,7 @@ private:
 
 /**
  * Holds the current zips.
- * 
+ *
  * todo(intrinsic): This needs to be removed..
  */
 static CUtlLinkedList< CXZipFile* > g_ZipUtils;

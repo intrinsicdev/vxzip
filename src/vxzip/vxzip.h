@@ -2,7 +2,7 @@
  * \file   vxzip.h
  * \brief  Source Engine Application object for this app
  *
- * \author tom
+ * \author Tom <intrinsic.dev@outlook.com>
  * \date   July 2022
  *********************************************************************/
 #pragma once

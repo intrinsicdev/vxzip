@@ -2,7 +2,7 @@
  * \file   vxzip.cpp
  * \brief  Main entry point
  *
- * \author Tom <intrinsicdev@outlook.com>
+ * \author Tom <intrinsic.dev@outlook.com>
  * \date   July 2022
  *********************************************************************/
 #include "vxzip.h"

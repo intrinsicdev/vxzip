@@ -2,8 +2,8 @@
  * \file   source_sdk.h
  * \brief  Header to connect and initialize the SDK subsystems.
  *			Also provides access to core containers (string and buffer)
- * 
- * \author Tom <intrinsicdev@outlook.com>
+ *
+ * \author Tom <intrinsic.dev@outlook.com>
  * \date   July 2022
  *********************************************************************/
 #ifndef _SOURCE_SDK_H_
@@ -18,10 +18,10 @@
 #include <utlbuffer.h>
 #include <utlstring.h>
 
-/**
- * Interface to allow abstraction of file output methods.
- * Files may be written to a CUtlBuffer or a filestream
- */
+ /**
+  * Interface to allow abstraction of file output methods.
+  * Files may be written to a CUtlBuffer or a filestream
+  */
 abstract_class IWriteStream
 {
 public:

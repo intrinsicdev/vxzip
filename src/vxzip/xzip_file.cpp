@@ -3,13 +3,13 @@
  * \brief  XZip format support. Based on the zip code provided
  *			by the public SDK.
  *
- * \author Tom <intrinsicdev@outlook.com>
+ * \author Tom <intrinsic.dev@outlook.com>
  * \date   July 2022
  *********************************************************************/
 
 #include "xzip_file.h"
 
-// Data descriptions for byte swapping
+ // Data descriptions for byte swapping
 BEGIN_BYTESWAP_DATADESC(ZIP_EndOfCentralDirRecord)
 DEFINE_FIELD(signature, FIELD_INTEGER),
 DEFINE_FIELD(numberOfThisDisk, FIELD_SHORT),
