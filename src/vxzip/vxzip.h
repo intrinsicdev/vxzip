@@ -51,3 +51,26 @@ public:
  * Register the application.
  */
 DEFINE_CONSOLE_APPLICATION_OBJECT(CVXZipApp);
+
+/**
+ * Redirection of the log messages to signal failures.
+ *
+ * ex: SPEW_ASSERT will return SPEW_DEBUGGER to log this message to the debugger as well.
+ *
+ * \param spewType Message spew type
+ * \param pMsg
+ * \return Spew return value
+ */
+static SpewRetval_t OutputFunc(SpewType_t spewType, char const* pMsg)
+{
+	// write to standard output
+	printf(pMsg);
+
+	// determine our spew result
+	switch (spewType)
+	{
+	case SPEW_ERROR: return SPEW_ABORT;
+	case SPEW_ASSERT:return SPEW_DEBUGGER;
+	default: return SPEW_CONTINUE;
+	}
+}

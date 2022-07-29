@@ -9,6 +9,8 @@
 
 bool CVXZipApp::Create()
 {
+	// Redirect spew output
+	SpewOutputFunc(OutputFunc);
 	return false;
 }
 
