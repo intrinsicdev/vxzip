@@ -45,12 +45,6 @@ public:
 
 public:
 	/**
-	 * Contains the zip file handles held by this application.
-	 */
-	CUtlLinkedList< HANDLE > m_ZipFileHandles;
-
-public:
-	/**
 	 * Spews app help and usage.
 	 *
 	 */
