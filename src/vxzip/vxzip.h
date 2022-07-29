@@ -8,6 +8,8 @@
 #pragma once
 
 #include <appframework/appframework.h>
+#include <tier1/tier1.h>
+#include <tier2/tier2.h>
 #include "xzip_file.h"
 
  /**
