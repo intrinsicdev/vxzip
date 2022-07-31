@@ -30,21 +30,6 @@
     <ClCompile Include="xzip_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\thirdparty\source-sdk\mp\src\public\filesystem_init.cpp">
-      <Filter>Source Files\Source SDK</Filter>
-    </ClCompile>
-    <ClCompile Include="..\thirdparty\source-sdk\mp\src\public\filesystem_helpers.cpp">
-      <Filter>Source Files\Source SDK</Filter>
-    </ClCompile>
-    <ClCompile Include="..\thirdparty\source-sdk\mp\src\utils\common\cmdlib.cpp">
-      <Filter>Source Files\Source SDK</Filter>
-    </ClCompile>
-    <ClCompile Include="..\thirdparty\source-sdk\mp\src\utils\common\scriplib.cpp">
-      <Filter>Source Files\Source SDK</Filter>
-    </ClCompile>
-    <ClCompile Include="..\thirdparty\source-sdk\mp\src\utils\common\filesystem_tools.cpp">
-      <Filter>Source Files\Source SDK</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source_sdk.h">
@@ -55,21 +40,6 @@
     </ClInclude>
     <ClInclude Include="vxzip.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\thirdparty\source-sdk\mp\src\utils\common\cmdlib.h">
-      <Filter>Header Files\Source SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\thirdparty\source-sdk\mp\src\utils\common\filesystem_tools.h">
-      <Filter>Header Files\Source SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\thirdparty\source-sdk\mp\src\utils\common\scriplib.h">
-      <Filter>Header Files\Source SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\filesystem_init.h">
-      <Filter>Header Files\Source SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\filesystem_helpers.h">
-      <Filter>Header Files\Source SDK</Filter>
     </ClInclude>
     <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\zip_utils.h">
       <Filter>Header Files\Source SDK</Filter>

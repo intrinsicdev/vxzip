@@ -62,6 +62,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,6 +81,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile />
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -90,22 +92,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\thirdparty\source-sdk\mp\src\public\filesystem_helpers.cpp" />
-    <ClCompile Include="..\thirdparty\source-sdk\mp\src\public\filesystem_init.cpp" />
-    <ClCompile Include="..\thirdparty\source-sdk\mp\src\utils\common\cmdlib.cpp" />
-    <ClCompile Include="..\thirdparty\source-sdk\mp\src\utils\common\filesystem_tools.cpp" />
-    <ClCompile Include="..\thirdparty\source-sdk\mp\src\utils\common\scriplib.cpp" />
     <ClCompile Include="vxzip.cpp" />
     <ClCompile Include="xzip_file.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\filesystem_helpers.h" />
-    <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\filesystem_init.h" />
     <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\zip_uncompressed.h" />
     <ClInclude Include="..\thirdparty\source-sdk\mp\src\public\zip_utils.h" />
-    <ClInclude Include="..\thirdparty\source-sdk\mp\src\utils\common\cmdlib.h" />
-    <ClInclude Include="..\thirdparty\source-sdk\mp\src\utils\common\filesystem_tools.h" />
-    <ClInclude Include="..\thirdparty\source-sdk\mp\src\utils\common\scriplib.h" />
     <ClInclude Include="source_sdk.h" />
     <ClInclude Include="vxzip.h" />
     <ClInclude Include="xzip_file.h" />

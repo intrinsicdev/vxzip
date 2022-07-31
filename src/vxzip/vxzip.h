@@ -5,13 +5,17 @@
  * \author Tom <intrinsic.dev@outlook.com>
  * \date   July 2022
  *********************************************************************/
+
 #pragma once
+#include <filesystem>
+
 #include <appframework/appframework.h>
 #include <tier0/icommandline.h>
 #include <tier1/tier1.h>
 #include <tier2/tier2.h>
-#include <../../utils/common/scriplib.h>
 #include "xzip_file.h"
+
+namespace fs = std::filesystem;
 
  /**
   * Implementation of appsystem interface.
@@ -84,14 +88,14 @@ private:
 	 * \param inputPath
 	 * \return
 	 */
-	void OpenXZip(CUtlString& inputPath);
+	void OpenXZip(const char* pszZipPath);
 	/**
 	 * Writes the current pak file to the disk.
 	 *
 	 * \param outputPath
 	 * \return
 	 */
-	void SaveXZip(CUtlString& outputPath, bool bClose = false);
+	void SaveXZip(const fs::path& outputPath, bool bClose = false);
 
 	/**
 	 * Closes the XZip pak file (deallocation).
@@ -99,8 +103,10 @@ private:
 	 */
 	void CloseXZip();
 
-	void ExtractAllFiles(CUtlString* outputPath);
-	bool ExtractFile(CUtlSymbol* fileSymbol, int fileSize, CUtlString* outputPath);
+	void ExtractAllFiles(const fs::path& outputPath);
+	bool ExtractFile(const char* pszRelPath, const fs::path& outputPath);
+	
+	void WriteBuffer(CUtlBuffer& buffer, const fs::path& outputPath);
 
 	/**
 	 * Object pointer to CXZip for this instance.

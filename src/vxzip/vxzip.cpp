@@ -6,17 +6,16 @@
  * \date   July 2022
  *********************************************************************/
 #include "vxzip.h"
-#include "../thirdparty/source-sdk/mp/src/utils/common/filesystem_tools.h"
 
- /**
-  * Redirection of the log messages to signal failures.
-  *
-  * ex: SPEW_ASSERT will return SPEW_DEBUGGER to log this message to the debugger as well.
-  *
-  * \param spewType Message spew type
-  * \param pMsg
-  * \return Spew return value
-  */
+/**
+ * Redirection of the log messages to signal failures.
+ *
+ * ex: SPEW_ASSERT will return SPEW_DEBUGGER to log this message to the debugger as well.
+ *
+ * \param spewType Message spew type
+ * \param pMsg
+ * \return Spew return value
+ */
 static SpewRetval_t OutputFunc(SpewType_t spewType, char const* pMsg)
 {
 	// write to standard output
@@ -37,7 +36,6 @@ bool CVXZipApp::Create()
 
 	AppSystemInfo_t appSystems[] =
 	{
-		{ "FileSystem_Stdio.dll",	FILESYSTEM_INTERFACE_VERSION },
 		// todo: Add required appsystem module loads here
 		{ "", "" }	// Required to terminate the list
 	};
@@ -50,13 +48,6 @@ bool CVXZipApp::PreInit()
 
 	ConnectTier1Libraries(&factory, 1);
 	ConnectTier2Libraries(&factory, 1);
-
-	// Init barebones file system
-	if (!FileSystem_Init(NULL, -1, FSInitType_t::FS_INIT_COMPATIBILITY_MODE, true))
-	{
-		Error("Failed to init filesystem!");
-		return false;
-	}
 
 	return true;
 }
@@ -144,8 +135,9 @@ bool CVXZipApp::ParseCommandLine()
 
 void CVXZipApp::ExtractXZip(CUtlString& outputPath, CUtlString& zipPath)
 {
+	fs::path path { outputPath.AbsPath().Get() };
 	OpenXZip(zipPath);
-	ExtractAllFiles(&outputPath);
+	ExtractAllFiles(path);
 }
 
 void CVXZipApp::BuildXZip(CUtlString& inputPath, CUtlString& zipPath)
@@ -156,15 +148,15 @@ void CVXZipApp::BuildXZip(CUtlString& inputPath, CUtlString& zipPath)
 	// todo: Write XZip pak to disk
 }
 
-void CVXZipApp::OpenXZip(CUtlString& inputPath)
+void CVXZipApp::OpenXZip(const char* pszZipPath)
 {
 	m_pXZipFile = new CXZipFile(NULL, true);
 
-	m_hXZipFile = m_pXZipFile->OpenFromDisk(inputPath.Get());
+	m_hXZipFile = m_pXZipFile->OpenFromDisk(pszZipPath);
 	Assert(m_hXZipFile);
 }
 
-void CVXZipApp::SaveXZip(CUtlString& outputPath, bool bClose)
+void CVXZipApp::SaveXZip(const fs::path& outputPath, bool bClose)
 {
 	m_pXZipFile->SaveToDisk(m_hXZipFile);
 
@@ -181,7 +173,8 @@ void CVXZipApp::CloseXZip()
 		delete m_pXZipFile;
 }
 
-void CVXZipApp::ExtractAllFiles(CUtlString* outputPath)
+
+void CVXZipApp::ExtractAllFiles(const fs::path& outputPath)
 {
 	auto iEntryID = -1;
 	auto iFileSize = 0;
@@ -194,7 +187,7 @@ void CVXZipApp::ExtractAllFiles(CUtlString* outputPath)
 	while (iEntryID > -1)
 	{
 		// extract file
-		if(ExtractFile(&entrySymbol, iFileSize, outputPath))
+		if (ExtractFile(entrySymbol.String(), outputPath))
 			Msg("Extracted - %s\n", entrySymbol.String());
 		else
 			Error("Failed to extract - %s\n", entrySymbol.String());
@@ -204,22 +197,30 @@ void CVXZipApp::ExtractAllFiles(CUtlString* outputPath)
 	}
 }
 
-bool CVXZipApp::ExtractFile(CUtlSymbol* fileSymbol, int fileSize, CUtlString* outputPath)
+bool CVXZipApp::ExtractFile(const char* pszRelPath, const std::filesystem::path& path)
 {
-	auto fullPath = CUtlString::PathJoin(outputPath->Get(), fileSymbol->String());
-	//	todo: Add '-f' option for forcing - aka overwrite if exists
-	auto writeMode = DiskWriteMode_t::WRITE_TO_DISK_ALWAYS;
-	auto fileBuffer = CUtlBuffer(0, fileSize, 0);
-	auto bResult = false;
+	// create final path
+	auto finalPath = (fs::path{ path } /= pszRelPath);
+	CUtlBuffer fileBuffer;
 
-	m_pXZipFile->ReadFile(m_hXZipFile, fileSymbol->String(), false, fileBuffer);
-	
+	m_pXZipFile->ReadFile(m_hXZipFile, pszRelPath, false, fileBuffer);
+
 	if (fileBuffer.IsValid())
 	{
-		// todo: Write file
-		fileBuffer.Purge();
+		if (!(fs::exists(finalPath.parent_path())))
+			fs::create_directories(finalPath.parent_path());
+
+		WriteBuffer(fileBuffer, finalPath);
 		return true;
 	}
 
 	return false;
+}
+
+void CVXZipApp::WriteBuffer(CUtlBuffer& buffer, const fs::path& outputPath)
+{
+	auto hFile = CreateFile(outputPath.string().c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	CFileStream stream(hFile);
+	stream.Put(buffer.Base(), buffer.Size());
 }
