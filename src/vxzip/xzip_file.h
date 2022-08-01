@@ -80,7 +80,7 @@ public:
 	bool			FileExists(const char* relativename);
 
 	bool			ReadFile(const char* relativename, bool bTextMode, CUtlBuffer& buf);
-	bool			ReadFile(HANDLE hZipFile, const char* relativename, bool bTextMode, CUtlBuffer& buf);
+	int				ReadFile(HANDLE hZipFile, const char* relativename, bool bTextMode, CUtlBuffer& buf);
 
 	void			OpenFromBuffer(void* buffer, int bufferlength);
 	HANDLE			OpenFromDisk(const char* pFilename);

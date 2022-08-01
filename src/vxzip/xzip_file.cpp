@@ -741,7 +741,7 @@ bool CXZipFile::ReadFile(const char* pRelativeName, bool bTextMode, CUtlBuffer& 
 //-----------------------------------------------------------------------------
 // Reads a file from the zip. Requires the zip file handle if this zip was loaded via OpenFromDisk
 //-----------------------------------------------------------------------------
-bool CXZipFile::ReadFile(HANDLE hZipFile, const char* pRelativeName, bool bTextMode, CUtlBuffer& buf)
+int CXZipFile::ReadFile(HANDLE hZipFile, const char* pRelativeName, bool bTextMode, CUtlBuffer& buf)
 {
 	// Lower case only
 	char pName[512];
@@ -755,7 +755,7 @@ bool CXZipFile::ReadFile(HANDLE hZipFile, const char* pRelativeName, bool bTextM
 	if (nIndex == m_Files.InvalidIndex())
 	{
 		// not found
-		return false;
+		return 0;
 	}
 
 	CZipEntry* pEntry = &m_Files[nIndex];
@@ -768,7 +768,7 @@ bool CXZipFile::ReadFile(HANDLE hZipFile, const char* pRelativeName, bool bTextM
 		CWin32File::FileSeek(hZipFile, pEntry->m_SourceDiskOffset, FILE_BEGIN);
 		if (!CWin32File::FileRead(hZipFile, readBuffer.Base(), pEntry->m_nCompressedSize))
 		{
-			return false;
+			return 0;
 		}
 
 		pData = readBuffer.Base();
@@ -794,7 +794,7 @@ bool CXZipFile::ReadFile(HANDLE hZipFile, const char* pRelativeName, bool bTextM
 				(int)nOutputBytesWritten != pEntry->m_nUncompressedSize)
 			{
 				Error("Zip: Failed decompressing LZMA data\n");
-				return false;
+				return 0;
 			}
 
 			pData = decompressTransform.Base();
@@ -802,7 +802,7 @@ bool CXZipFile::ReadFile(HANDLE hZipFile, const char* pRelativeName, bool bTextM
 		else
 		{
 			Error("Unsupported compression type in Zip file: %u\n", pEntry->m_eCompressionType);
-			return false;
+			return 0;
 		}
 	}
 
@@ -817,7 +817,7 @@ bool CXZipFile::ReadFile(HANDLE hZipFile, const char* pRelativeName, bool bTextM
 		buf.Put(pData, pEntry->m_nUncompressedSize);
 	}
 
-	return true;
+	return pEntry->m_nUncompressedSize;
 }
 
 //-----------------------------------------------------------------------------
