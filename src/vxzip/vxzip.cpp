@@ -88,7 +88,6 @@ int CVXZipApp::Main()
 
 void CVXZipApp::PostShutdown()
 {
-	free(m_hXZipFile);
 	free(m_pXZipFile);
 	// post shutdown should do PreInit() but in reverse
 
