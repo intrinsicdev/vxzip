@@ -88,6 +88,8 @@ int CVXZipApp::Main()
 
 void CVXZipApp::PostShutdown()
 {
+	free(m_hXZipFile);
+	free(m_pXZipFile);
 	// post shutdown should do PreInit() but in reverse
 
 	// todo: Dispose of connected appsystems here
@@ -203,24 +205,28 @@ bool CVXZipApp::ExtractFile(const char* pszRelPath, const std::filesystem::path&
 	auto finalPath = (fs::path{ path } /= pszRelPath);
 	CUtlBuffer fileBuffer;
 
-	m_pXZipFile->ReadFile(m_hXZipFile, pszRelPath, false, fileBuffer);
+	bool bIsText = false;
+	auto fileExt = finalPath.extension();
+
+	if (fileExt == ".cfg" || fileExt == ".txt" ||
+		fileExt == ".vmt" /*|| fileExt == */ )
+	{
+		bIsText = true;
+	}
+
+
+	auto fileSize = m_pXZipFile->ReadFile(m_hXZipFile, pszRelPath, bIsText, fileBuffer);
 
 	if (fileBuffer.IsValid())
 	{
 		if (!(fs::exists(finalPath.parent_path())))
 			fs::create_directories(finalPath.parent_path());
 
-		WriteBuffer(fileBuffer, finalPath);
-		return true;
+		auto hFile = CreateFile(finalPath.string().c_str(), 
+			GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+		return CWin32File::FileWrite(hFile, fileBuffer.Base(), fileSize);
 	}
 
 	return false;
-}
-
-void CVXZipApp::WriteBuffer(CUtlBuffer& buffer, const fs::path& outputPath)
-{
-	auto hFile = CreateFile(outputPath.string().c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-
-	CFileStream stream(hFile);
-	stream.Put(buffer.Base(), buffer.Size());
 }

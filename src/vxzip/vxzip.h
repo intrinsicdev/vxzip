@@ -105,8 +105,6 @@ private:
 
 	void ExtractAllFiles(const fs::path& outputPath);
 	bool ExtractFile(const char* pszRelPath, const fs::path& outputPath);
-	
-	void WriteBuffer(CUtlBuffer& buffer, const fs::path& outputPath);
 
 	/**
 	 * Object pointer to CXZip for this instance.
